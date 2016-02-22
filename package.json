@@ -1,0 +1,22 @@
+{
+  "name": "teupetui",
+  "version": "1.0.0",
+  "description": "find your pet",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/abdalla/teupetui"
+  },
+  "author": "Carlos Abdalla",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.0"
+  }
+}
