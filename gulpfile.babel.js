@@ -41,7 +41,7 @@ gulp.task('restart', () => {
 });
 
 gulp.task('watch', () => {
-  return watch(paths.js, () =>{
+  return watch(paths.js, () => {
     gulp.start('build');
   });
 });
