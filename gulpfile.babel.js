@@ -4,6 +4,10 @@ import rimraf from 'rimraf';
 import run from 'run-sequence';
 import watch from 'gulp-watch';
 import server from 'gulp-live-server';
+//import browserify from 'browserify';
+//import babelify from 'babelify';
+//import source from 'vinyl-source-stream';
+
 
 const paths = {
   js: ['./src/**/*.js'],
@@ -29,6 +33,14 @@ gulp.task('flow', shell.task([
 gulp.task('babel', shell.task([
   'babel src --out-dir app'
 ]));
+
+//gulp.task('default', function(){
+//  return browserify('./src/app.js')
+//                .transform(babelify)
+//                .bundle()
+//                .pipe(source('bundle.js'))
+//                .pipe(gulp.dest('./build/js/'));
+//});
 
 let express;
 
