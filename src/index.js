@@ -18,9 +18,6 @@ const server = app.listen(3000, function () {
 });
 
 //sample routes
-//import dogs from './routes/dogs';
-//app.use('/dogs', dogs);
-
 app.get('/hello', (req, res) => {
   res.send('Hello Carlos, my master!');
 });
