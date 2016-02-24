@@ -1,9 +1,9 @@
 /* @flow */
 
 import express from 'express';
-import bodyParser from 'body-parser';
-import multer from 'multer';
-import morgan from 'morgan';
+import bodyParser from 'body-parser'; //body parsin stuff => https://github.com/expressjs/body-parser
+import multer from 'multer'; //upload stuff for express ==> https://github.com/expressjs/multer
+import morgan from 'morgan'; //log stuff for express ==> https://github.com/expressjs/morgan
 
 const app = express();
 const upload = multer();
