@@ -20,7 +20,7 @@ const server = app.listen(3000, function () {
 
 // Sends all requests to index.html so we can support BrowserHistory
 app.get('*', function(request, response){
-  response.sendFile(path.resolve(__dirname, '../../public', 'index.html'));
+  response.sendFile(path.resolve(__dirname, './public', 'index.html'));
 });
 
 //sample routes
