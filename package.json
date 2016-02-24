@@ -2,7 +2,7 @@
   "name": "teupetui",
   "version": "1.0.0",
   "scripts": {
-    "start": "node ./server.js"
+    "start": "node server.js"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",
@@ -11,10 +11,13 @@
     "babel-plugin-transform-flow-strip-types": "^6.5.0",
     "babel-preset-es2015-node5": "^1.1.2",
     "babel-preset-stage-0": "^6.5.0",
+    "compression": "^1.6.1",
     "flow-bin": "^0.22.0",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-live-server": "0.0.29",
     "gulp-shell": "^0.5.2",
+    "gulp-uglify": "^1.5.3",
     "gulp-watch": "^4.3.5",
     "rimraf": "^2.5.2",
     "run-sequence": "^1.1.5"
