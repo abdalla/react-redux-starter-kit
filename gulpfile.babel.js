@@ -8,7 +8,8 @@ import server from 'gulp-live-server';
 
 const paths = {
   js: ['./src/**/*.js'],
-  destination: './app'
+  destination: './app',
+  serverPath: './app/server'
 };
 
 gulp.task('default', callback => {
@@ -34,7 +35,7 @@ gulp.task('babel', shell.task([
 let express;
 
 gulp.task('server', () => {
-    express = server.new(paths.destination + '/server.js' );
+    express = server.new(paths.serverPath + '/server.js' );
 });
 
 gulp.task('restart', () => {

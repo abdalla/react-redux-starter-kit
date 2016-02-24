@@ -2,7 +2,7 @@
   "name": "teupetui",
   "version": "1.0.0",
   "scripts": {
-    "start": "node ./app/server.js"
+    "start": "node ./app/server/server.js"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",
@@ -22,8 +22,13 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "lodash": "^4.5.1",
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1",
     "request": "^2.69.0"
   }
 }
