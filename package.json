@@ -2,7 +2,7 @@
   "name": "teupetui",
   "version": "1.0.0",
   "scripts": {
-    "start": "node ./app/server/server.js"
+    "start": "node ./server.js"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",

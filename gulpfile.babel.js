@@ -9,7 +9,7 @@ import server from 'gulp-live-server';
 const paths = {
   js: ['./src/**/*.js'],
   destination: './app',
-  serverPath: './app/server'
+  serverPath: './server'
 };
 
 gulp.task('default', callback => {
@@ -17,11 +17,15 @@ gulp.task('default', callback => {
 });
 
 gulp.task('build', callback => {
-  run('clean', 'flow', 'babel', 'restart', callback);
+  run('clean:app', 'clean:server', 'flow', 'babel', 'restart', callback);
 });
 
-gulp.task('clean', callback => {
+gulp.task('clean:app', callback => {
   rimraf(paths.destination, callback);
+});
+
+gulp.task('clean:server', callback => {
+  rimraf(paths.serverPath, callback);
 });
 
 gulp.task('flow', shell.task([
@@ -29,7 +33,8 @@ gulp.task('flow', shell.task([
 ], {ignoreErrors: true}));
 
 gulp.task('babel', shell.task([
-  'babel src --out-dir app'
+  'babel src/js --out-dir app',
+  'babel src/server --out-dir server'
 ]));
 
 let express;
