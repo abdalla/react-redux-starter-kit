@@ -2,7 +2,8 @@
   "name": "teupetui",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "gulp": "gulp"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",
@@ -14,8 +15,12 @@
     "compression": "^1.6.1",
     "flow-bin": "^0.22.0",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-less": "^3.0.5",
     "gulp-live-server": "0.0.29",
+    "gulp-plumber": "^1.1.0",
     "gulp-shell": "^0.5.2",
     "gulp-uglify": "^1.5.3",
     "gulp-watch": "^4.3.5",

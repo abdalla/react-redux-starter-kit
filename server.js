@@ -40,11 +40,13 @@ const server = app.listen(3000, function () {
 });
 
 // Sends all requests to index.html so we can support BrowserHistory
-app.get('*', function (request, response) {
+app.get('/', function (request, response) {
   response.sendFile(_path2.default.resolve(__dirname, './public', 'index.html'));
 });
 
+//////////////////////////////////////////////////
 //sample routes
+//////////////////////////////////////////////////
 app.get('/hello', (req, res) => {
   res.send('Hello Carlos, my master!');
 });
@@ -54,4 +56,21 @@ app.get('/add/:x/:y', (req, res) => {
   const y = req.params.y * 1;
 
   res.send({ sum: x + y });
+});
+
+let cb0 = (req, res, next) => {
+  console.log('CB0');
+  next();
+};
+
+let cb1 = (req, res, next) => {
+  console.log('CB1');
+  next();
+};
+
+app.get('/example/d', [cb0, cb1], function (req, res, next) {
+  console.log('the response will be sent by the next function ...');
+  next();
+}, function (req, res) {
+  res.send('Hello from D!');
 });

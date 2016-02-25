@@ -1,27 +1,21 @@
+import flow from 'flow-bin';
 import gulp from 'gulp';
 import shell from 'gulp-shell';
 import rimraf from 'rimraf';
 import run from 'run-sequence';
 import watch from 'gulp-watch';
 import server from 'gulp-live-server';
-import uglify from 'gulp-uglify';
-import concat from 'gulp-concat';
-
-
-const paths = {
-  js: ['./src/**/*.js'],
-  source: 'src',
-  destination: './app',
-  destinationServer: './server.js'
-};
+import less from 'gulp-less';
+import autoprefixer from 'gulp-autoprefixer';
+import plumber from 'gulp-plumber';
+import { paths } from './gulp.config';
 
 gulp.task('default', callback => {
   run('server', 'build', 'watch', callback);
 });
 
 gulp.task('build', callback => {
-  //run('clean:app', 'clean:server', 'flow', 'babel', 'compress', 'restart', callback);
-  run('clean:app', 'clean:server', 'flow', 'babel', 'restart', callback);
+  run('clean:app', 'clean:server', 'clean:styles', 'flow', 'babel', 'styles', 'restart', callback);
 });
 
 gulp.task('clean:app', callback => {
@@ -36,18 +30,25 @@ gulp.task('flow', shell.task([
   'flow'
 ], {ignoreErrors: true}));
 
-//gulp.task('compress', ['babel'], () => {
-//  return gulp
-//      .src('./app/**/*.js')
-//      .pipe(concat('bundle.js'))
-//      .pipe(uglify())
-//      .pipe(gulp.dest('./app/min/'));
-//});
-
 gulp.task('babel', shell.task([
-  `babel ${paths.source}/js --out-dir app`,
+  `babel ${paths.source}/js --out-dir app/js`,
   `babel ${paths.source}/server --out-dir .`
 ]));
+
+////css stuff
+gulp.task('styles', () => {
+  return gulp
+      .src(paths.less)
+      .pipe(plumber())
+      .pipe(less())
+      .pipe(autoprefixer({browsers: ['last 2 versions', '> 5%']}))
+      .pipe(gulp.dest(paths.temp));
+});
+
+gulp.task('clean:styles', callback => {
+    rimraf(paths.temp, callback);
+});
+////
 
 let express;
 
@@ -60,7 +61,7 @@ gulp.task('restart', () => {
 });
 
 gulp.task('watch', () => {
-  return watch(paths.js, () => {
+  return watch(paths.toWatch, () => {
     gulp.start('build');
   });
 });
