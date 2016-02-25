@@ -30,7 +30,7 @@ const app = (0, _express2.default)(); //log stuff for express ==> https://github
 
 const upload = (0, _multer2.default)();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 1407;
 const env = process.env.NODE_ENV;
 
 app.use(_express2.default.static(_path2.default.join(__dirname, '/../public')));

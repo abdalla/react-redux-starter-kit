@@ -9,6 +9,7 @@ import gls from 'gulp-live-server';
 import less from 'gulp-less';
 import autoprefixer from 'gulp-autoprefixer';
 import plumber from 'gulp-plumber';
+import { argv } from 'yargs';
 import { paths, config } from './gulp.config';
 
 const port = process.env.PORT || config.defaultPort;
@@ -59,7 +60,7 @@ gulp.task('server', () => {
 
 gulp.task('restart', () => {
     express.start.bind(express)();
-    
+
     if(express.config.options.env.NODE_ENV === 'development') {
       startBrowserSync();
     };
@@ -73,7 +74,7 @@ gulp.task('watch', () => {
 
 ///browserSync stuff
 let startBrowserSync = () => {
-  if(browserSync.active) {
+  if( argv.nosync || browserSync.active) {
     return;
   };
 
