@@ -3,12 +3,13 @@ const _js = './src/**/*.js';
 export const paths = {
         js: [_js],
         toWatch: [_js, _less],
-        source: 'src',
-        destination: './app',
-        css: './app/styles',
+        source: 'src/',
+        destination: './app/',
+        css: './app/styles/',
         less: _less,
         nodeServer: './server.js',
-        server: './src/server/'
+        server: './src/server/',
+        publicFolder: './public/'
 };
 
 export const config = {

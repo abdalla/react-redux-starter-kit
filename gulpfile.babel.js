@@ -1,3 +1,4 @@
+import browserSync from 'browser-sync';
 import flow from 'flow-bin';
 import gulp from 'gulp';
 import shell from 'gulp-shell';
@@ -33,7 +34,7 @@ gulp.task('flow', shell.task([
 ], {ignoreErrors: true}));
 
 gulp.task('babel', shell.task([
-  `babel ${paths.source}/js --out-dir app/js`,
+  `babel ${paths.source}js --out-dir app/js`,
   `babel ${paths.server} --out-dir .`
 ]));
 
@@ -58,6 +59,7 @@ gulp.task('server', () => {
 
 gulp.task('restart', () => {
     express.start.bind(express)();
+    startBrowserSync();
 });
 
 gulp.task('watch', () => {
@@ -65,3 +67,32 @@ gulp.task('watch', () => {
     gulp.start('build');
   });
 });
+
+///browserSync stuff
+let startBrowserSync = () => {
+  if(browserSync.active) {
+    return;
+  };
+
+  console.log(`*** Starting browser-sync on port ${port}`);
+
+  let options = {
+    proxy: `localhost:${port}`,
+    port: 3100,
+    files: [`${paths.destination}**/*.*`, `${paths.publicFolder}**/*.*`],
+    ghostMode: {
+      clicks: true,
+      location: false,
+      forms: true,
+      scroll: true
+    },
+    injectChanges: true,
+    logFileChanges: true,
+    logLevel: 'debug',
+    logPrefix: 'gulp-patterns',
+    notify: true,
+    reloadDelay: 1000
+  };
+
+  browserSync(options);
+};
