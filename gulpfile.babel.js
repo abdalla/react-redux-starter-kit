@@ -59,7 +59,10 @@ gulp.task('server', () => {
 
 gulp.task('restart', () => {
     express.start.bind(express)();
-    startBrowserSync();
+    
+    if(express.config.options.env.NODE_ENV === 'development') {
+      startBrowserSync();
+    };
 });
 
 gulp.task('watch', () => {
