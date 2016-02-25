@@ -1,23 +1,27 @@
+import autoprefixer from 'gulp-autoprefixer';
 import flow from 'flow-bin';
 import gulp from 'gulp';
-import shell from 'gulp-shell';
+import less from 'gulp-less';
+import nodemon from 'gulp-nodemon';
+import plumber from 'gulp-plumber';
 import rimraf from 'rimraf';
 import run from 'run-sequence';
+import server from 'gulp-live-server';
+import shell from 'gulp-shell';
 import watch from 'gulp-watch';
-import gls from 'gulp-live-server';
-import less from 'gulp-less';
-import autoprefixer from 'gulp-autoprefixer';
-import plumber from 'gulp-plumber';
+
 import { paths, config } from './gulp.config';
 
 const port = process.env.PORT || config.defaultPort;
+const env = config.isDev ? 'dev' : 'build';
 
 gulp.task('default', callback => {
-  run('server', 'build', 'watch', callback);
+  run(`server`, 'build', 'restart', 'watch', callback);
+  //run(`server-${env}`, callback);
 });
 
 gulp.task('build', callback => {
-  run('clean:app', 'clean:server', 'flow', 'babel', 'styles', 'restart', callback);
+  run('clean:app', 'clean:server', 'flow', 'babel', 'styles', callback);
 });
 
 gulp.task('clean:app', callback => {
@@ -41,7 +45,6 @@ gulp.task('babel', shell.task([
 gulp.task('styles', () => {
   return gulp
       .src(paths.less)
-
       .pipe(plumber())
       .pipe(less())
       .pipe(autoprefixer({browsers: ['last 2 versions', '> 5%']}))
@@ -49,14 +52,37 @@ gulp.task('styles', () => {
 });
 ////
 
+//gulp.task('server-dev', ['build'], () => {
+//  let nodeOptions = {
+//      script: paths.nodeServer,
+//      delayTime: 1,
+//      env: {
+//        'PORT': port,
+//        'NOE_ENV': env
+//      },
+//      watch: paths.toWatch
+//  };
+
+//  return nodemon(nodeOptions);
+//});
+
 let express;
 
 gulp.task('server', () => {
-    //express = server.new(paths.nodeServer);
-    express = gls(paths.nodeServer, {env: {PORT: port}});
+    express = server.new(paths.nodeServer);
+    express.options = {
+      cwd: undefined
+    };
+    express.options.env = process.env;
+    express.options.env.PORT = 8500;
+    express.options.env.NODE_ENV = env;
+
+    express.config.livereload = 3333;
+
+    console.log(express.options);
 });
 
-gulp.task('restart', () => {
+gulp.task('restart', ['server'], () => {
     express.start.bind(express)();
 });
 

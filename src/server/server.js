@@ -9,21 +9,22 @@ import path from 'path';
 const app = express();
 const upload = multer();
 
+const port = process.env.PORT || 3000;
+const env = process.env.NODE_ENV;
+
 app.use(express.static(path.join(__dirname, '/../public')));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const server = app.listen(3000, function () {
-  console.log('Express listening on port 3000');
+const server = app.listen(port, function () {
+  console.log(`Express listening on port ${port} for ${env} environment`);
 });
 
 // Sends all requests to index.html so we can support BrowserHistory
 app.get('/', function(request, response){
   response.sendFile(path.resolve(__dirname, './public', 'index.html'));
 });
-
-
 
 //////////////////////////////////////////////////
 //sample routes

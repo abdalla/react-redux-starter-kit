@@ -5,7 +5,13 @@ export const paths = {
         toWatch: [_js, _less],
         source: 'src',
         destination: './app',
-        destinationServer: './server.js',
-        temp: './.tmp',
-        less: _less
-      };
+        css: './app/styles',
+        less: _less,
+        nodeServer: './server.js',
+        server: './src/server/'
+};
+
+export const config = {
+    isDev: true,
+    defaultPort: 1407
+};
