@@ -1,9 +1,8 @@
 {
   "name": "teupetui",
   "version": "1.0.0",
-  "main": "server.js",
   "scripts": {
-    "start": "gulp",
+    "start": "gulp --nosync",
     "nosync": "gulp --nosync",
     "dev": "PORT=7500 gulp",
     "prod": "gulp --nosync"
