@@ -12,7 +12,7 @@ const upload = multer();
 const port = process.env.PORT || 1407;
 const env = process.env.NODE_ENV;
 
-app.use(express.static(path.join(__dirname, '/../public')));
+app.use('/static', express.static(path.join(__dirname, '/app')));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

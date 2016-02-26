@@ -6,7 +6,7 @@
     "start": "gulp",
     "nosync": "gulp --nosync",
     "dev": "PORT=7500 gulp",
-    "gulp": "gulp"
+    "prod": "gulp --nosync"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",

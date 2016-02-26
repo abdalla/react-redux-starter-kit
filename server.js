@@ -33,7 +33,7 @@ const upload = (0, _multer2.default)();
 const port = process.env.PORT || 1407;
 const env = process.env.NODE_ENV;
 
-app.use(_express2.default.static(_path2.default.join(__dirname, '/../public')));
+app.use('/static', _express2.default.static(_path2.default.join(__dirname, '/app')));
 app.use((0, _morgan2.default)('dev'));
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
