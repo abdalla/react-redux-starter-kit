@@ -1,11 +1,12 @@
 {
   "name": "teupetui",
   "version": "1.0.0",
-  "main": "./build/server.js",
+  "main": "./server.js",
   "scripts": {
-    "start": "gulp",
+    "start": "node ./server.js",
+    "port": "PORT=7500 gulp",
     "nosync": "gulp --nosync",
-    "dev": "PORT=7500 gulp",
+    "dev": "gulp",
     "prod": "gulp --nosync"
   },
   "author": "Carlos Abdalla",

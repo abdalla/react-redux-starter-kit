@@ -1,2 +1,4 @@
-let name = 'abdalla 3';
+/* @flow */
+
+let name = 'abdalla';
 console.log(name);

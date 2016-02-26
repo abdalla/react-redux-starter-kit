@@ -1,4 +1,4 @@
 'use strict';
 
-let name = 'abdalla 3';
+let name = 'abdalla';
 console.log(name);

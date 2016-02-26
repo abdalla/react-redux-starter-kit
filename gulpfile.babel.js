@@ -19,11 +19,15 @@ gulp.task('default', callback => {
 });
 
 gulp.task('build', callback => {
-  run('clean', 'flow', 'static', 'babel', 'styles', 'restart', callback);
+  run('clean-app', 'clean-server', 'flow', 'static', 'babel', 'styles', 'restart', callback);
 });
 
-gulp.task('clean', callback => {
+gulp.task('clean-app', callback => {
   rimraf(paths.destination, callback);
+});
+
+gulp.task('clean-server', callback => {
+  rimraf(paths.nodeServer, callback);
 });
 
 gulp.task('flow', shell.task([
@@ -32,7 +36,7 @@ gulp.task('flow', shell.task([
 
 gulp.task('babel', shell.task([
   `babel ${paths.source}/js --out-dir ${paths.bundle}`,
-  `babel ${paths.server} --out-dir ${paths.destination}`
+  `babel ${paths.server} --out-dir .`
 ]));
 
 gulp.task('static', () => {

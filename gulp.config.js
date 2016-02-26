@@ -3,7 +3,7 @@ const less = `${src}/styles/styles.less`;
 const js = `${src}/**/*.js`;
 const destination = './build'
 export const paths = {
-        js: [js],
+        js: js,
         toWatch: [js, less],
         source: src,
         destination: destination,
@@ -11,7 +11,7 @@ export const paths = {
         bundle: `${destination}/js/`,
         public: `${destination}/public/`,
         less: less,
-        nodeServer: `${destination}/server.js`,
+        nodeServer: `./server.js`,
         server: `${src}/server/`
 };
 
