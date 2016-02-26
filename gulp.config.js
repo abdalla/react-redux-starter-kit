@@ -1,15 +1,18 @@
-const _less = './src/styles/styles.less';
-const _js = './src/**/*.js';
+const src = './src';
+const less = `${src}/styles/styles.less`;
+const js = `${src}/**/*.js`;
+const destination = './build'
 export const paths = {
-        js: [_js],
-        toWatch: [_js, _less],
-        source: 'src/',
-        destination: './app/',
-        css: './app/styles/',
-        less: _less,
-        nodeServer: './server.js',
-        server: './src/server/',
-        publicFolder: './public/'
+        js: [js],
+        toWatch: [js, less],
+        source: src,
+        destination: destination,
+        css: `${destination}/styles/`,
+        bundle: `${destination}/js/`,
+        public: `${destination}/public/`,
+        less: less,
+        nodeServer: `${destination}/server.js`,
+        server: `${src}/server/`
 };
 
 export const config = {

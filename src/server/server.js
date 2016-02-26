@@ -12,7 +12,8 @@ const upload = multer();
 const port = process.env.PORT || 1407;
 const env = process.env.NODE_ENV;
 
-app.use('/static', express.static(path.join(__dirname, '/app')));
+console.log(path.join(__dirname, '/build'));
+app.use('/static', express.static(path.join(__dirname, '/')));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,7 +24,7 @@ const server = app.listen(port, function () {
 
 // Sends all requests to index.html so we can support BrowserHistory
 app.get('/', function(request, response){
-  response.sendFile(path.resolve(__dirname, './public', 'index.html'));
+  response.sendFile(path.resolve(__dirname, './public/', 'index.html'));
 });
 
 //////////////////////////////////////////////////

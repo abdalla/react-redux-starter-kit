@@ -1,15 +1,16 @@
 {
   "name": "teupetui",
   "version": "1.0.0",
+  "main": "./build/server.js",
   "scripts": {
-    "start": "gulp --nosync",
+    "start": "gulp",
     "nosync": "gulp --nosync",
     "dev": "PORT=7500 gulp",
     "prod": "gulp --nosync"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-plugin-transform-flow-strip-types": "^6.5.0",
     "babel-preset-es2015-node5": "^1.1.2",
@@ -30,7 +31,9 @@
     "gulp-watch": "^4.3.5",
     "rimraf": "^2.5.2",
     "run-sequence": "^1.1.5",
-    "yargs": "^4.2.0",
+    "yargs": "^4.2.0"
+  },
+  "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "lodash": "^4.5.1",

@@ -5,7 +5,7 @@ import shell from 'gulp-shell';
 import rimraf from 'rimraf';
 import run from 'run-sequence';
 import watch from 'gulp-watch';
-import gls from 'gulp-live-server';
+import ls from 'gulp-live-server';
 import less from 'gulp-less';
 import autoprefixer from 'gulp-autoprefixer';
 import plumber from 'gulp-plumber';
@@ -19,15 +19,11 @@ gulp.task('default', callback => {
 });
 
 gulp.task('build', callback => {
-  run('clean:app', 'clean:server', 'flow', 'babel', 'styles', 'restart', callback);
+  run('clean', 'flow', 'static', 'babel', 'styles', 'restart', callback);
 });
 
-gulp.task('clean:app', callback => {
+gulp.task('clean', callback => {
   rimraf(paths.destination, callback);
-});
-
-gulp.task('clean:server', callback => {
-  rimraf(paths.nodeServer , callback);
 });
 
 gulp.task('flow', shell.task([
@@ -35,15 +31,20 @@ gulp.task('flow', shell.task([
 ], {ignoreErrors: true}));
 
 gulp.task('babel', shell.task([
-  `babel ${paths.source}js --out-dir app/js`,
-  `babel ${paths.server} --out-dir .`
+  `babel ${paths.source}/js --out-dir ${paths.bundle}`,
+  `babel ${paths.server} --out-dir ${paths.destination}`
 ]));
+
+gulp.task('static', () => {
+  return gulp
+      .src([`${paths.source}/public/**/*`])
+      .pipe(gulp.dest(paths.public));
+});
 
 ////css stuff
 gulp.task('styles', () => {
   return gulp
       .src(paths.less)
-
       .pipe(plumber())
       .pipe(less())
       .pipe(autoprefixer({browsers: ['last 2 versions', '> 5%']}))
@@ -54,8 +55,7 @@ gulp.task('styles', () => {
 let express;
 
 gulp.task('server', () => {
-    //express = server.new(paths.nodeServer);
-    express = gls(paths.nodeServer, {env: {PORT: port}});
+    express = ls(paths.nodeServer, {env: {PORT: port}});
 });
 
 gulp.task('restart', () => {
@@ -83,7 +83,7 @@ let startBrowserSync = () => {
   let options = {
     proxy: `localhost:${port}`,
     port: 3100,
-    files: [`${paths.destination}**/*.*`, `${paths.publicFolder}**/*.*`],
+    files: [`${paths.destination}/**/*.*`],
     ghostMode: {
       clicks: true,
       location: false,

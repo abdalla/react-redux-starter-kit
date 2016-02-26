@@ -2,13 +2,10 @@
   color: #fff010;
   width: auto;
 }
-
 body {
   background-color: blue;
 }
-
-
-
 .sample-style {
-  transform-origin: center bottom;
+  -webkit-transform-origin: center bottom;
+          transform-origin: center bottom;
 }
