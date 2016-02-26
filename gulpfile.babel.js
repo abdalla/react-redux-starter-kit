@@ -9,6 +9,7 @@ import ls from 'gulp-live-server';
 import less from 'gulp-less';
 import autoprefixer from 'gulp-autoprefixer';
 import plumber from 'gulp-plumber';
+import util from 'gulp-util';
 import { argv } from 'yargs';
 import { paths, config } from './gulp.config';
 
@@ -82,7 +83,7 @@ let startBrowserSync = () => {
     return;
   };
 
-  console.log(`*** Starting browser-sync on port ${port}`);
+  log(`*** Starting browser-sync on port ${port}`);
 
   let options = {
     proxy: `localhost:${port}`,
@@ -103,4 +104,17 @@ let startBrowserSync = () => {
   };
 
   browserSync(options);
+};
+
+/////////////////////////////////
+let log = (msg) => {
+  if(typeof msg === 'object') {
+    for (let item in msg) {
+      if(msg.hasOwnProperty(item)) {
+        util.log(util.colors.red(msg[item]));
+      }
+    }
+  } else {
+    util.log(util.colors.red(msg));
+  }
 };
