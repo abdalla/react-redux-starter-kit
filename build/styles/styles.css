@@ -1,11 +1,1 @@
-.box {
-  color: #fff010;
-  width: auto;
-}
-body {
-  background-color: blue;
-}
-.sample-style {
-  -webkit-transform-origin: center bottom;
-          transform-origin: center bottom;
-}
+.box{color:#fff010;width:auto}body{background-color:#00f}.sample-style{-webkit-transform-origin:center bottom;transform-origin:center bottom}

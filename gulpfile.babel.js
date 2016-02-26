@@ -1,6 +1,7 @@
 import browserSync from 'browser-sync';
 import flow from 'flow-bin';
 import gulp from 'gulp';
+import csso from 'gulp-csso';
 import shell from 'gulp-shell';
 import rimraf from 'rimraf';
 import run from 'run-sequence';
@@ -53,9 +54,14 @@ gulp.task('styles', () => {
       .pipe(plumber())
       .pipe(less())
       .pipe(autoprefixer({browsers: ['last 2 versions', '> 5%']}))
+      .pipe(csso())
       .pipe(gulp.dest(paths.css));
 });
 ////
+
+gulp.task('optimize', () => {
+
+});
 
 let express;
 
