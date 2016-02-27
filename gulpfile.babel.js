@@ -10,7 +10,18 @@ import ls from 'gulp-live-server';
 import less from 'gulp-less';
 import autoprefixer from 'gulp-autoprefixer';
 import plumber from 'gulp-plumber';
+import useref from 'gulp-useref';
 import util from 'gulp-util';
+
+import gulpif from 'gulp-if';
+import uglify from 'gulp-uglify';
+import concat from 'gulp-concat';
+import rename from 'gulp-rename';
+import babel from 'gulp-babel'
+import source from 'vinyl-source-stream';
+import browserify from 'gulp-browserify';
+import babelify from 'babelify';
+
 import { argv } from 'yargs';
 import { paths, config } from './gulp.config';
 
@@ -21,7 +32,7 @@ gulp.task('default', callback => {
 });
 
 gulp.task('build', callback => {
-  run('clean-app', 'clean-server', 'flow', 'static', 'babel', 'styles', 'restart', callback);
+  run('clean-app', 'clean-server', 'flow', 'babel-server', 'static', 'minify-js', 'minify-css', 'restart', callback);
 });
 
 gulp.task('clean-app', callback => {
@@ -36,8 +47,7 @@ gulp.task('flow', shell.task([
   'flow'
 ], {ignoreErrors: true}));
 
-gulp.task('babel', shell.task([
-  `babel ${paths.source}/js --out-dir ${paths.bundle}`,
+gulp.task('babel-server', shell.task([
   `babel ${paths.server} --out-dir .`
 ]));
 
@@ -48,7 +58,7 @@ gulp.task('static', () => {
 });
 
 ////css stuff
-gulp.task('styles', () => {
+gulp.task('minify-css', () => {
   return gulp
       .src(paths.less)
       .pipe(plumber())
@@ -59,8 +69,17 @@ gulp.task('styles', () => {
 });
 ////
 
-gulp.task('optimize', () => {
-
+gulp.task('minify-js', () => {
+  return gulp
+      .src(`${paths.js}**/*.js`)
+      .pipe(plumber())
+      .pipe(babel())
+      .pipe(concat(config.concatScriptName)) //=> only to avoid copies
+      .pipe(gulp.dest(paths.bundle))
+      .pipe(browserify())
+      .pipe(uglify())
+      .pipe(rename(config.bundleMinName))
+      .pipe(gulp.dest(paths.bundle));
 });
 
 let express;
