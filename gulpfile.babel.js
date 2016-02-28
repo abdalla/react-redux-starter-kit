@@ -1,28 +1,23 @@
+import { argv } from 'yargs';
+import autoprefixer from 'gulp-autoprefixer';
+import babel from 'gulp-babel'
+import browserify from 'gulp-browserify';
 import browserSync from 'browser-sync';
+import concat from 'gulp-concat';
+import csso from 'gulp-csso';
 import flow from 'flow-bin';
 import gulp from 'gulp';
-import csso from 'gulp-csso';
-import shell from 'gulp-shell';
+import less from 'gulp-less';
+import ls from 'gulp-live-server';
+import plumber from 'gulp-plumber';
+import rename from 'gulp-rename';
 import rimraf from 'rimraf';
 import run from 'run-sequence';
+import shell from 'gulp-shell';
 import watch from 'gulp-watch';
-import ls from 'gulp-live-server';
-import less from 'gulp-less';
-import autoprefixer from 'gulp-autoprefixer';
-import plumber from 'gulp-plumber';
-import useref from 'gulp-useref';
+import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 
-import gulpif from 'gulp-if';
-import uglify from 'gulp-uglify';
-import concat from 'gulp-concat';
-import rename from 'gulp-rename';
-import babel from 'gulp-babel'
-import source from 'vinyl-source-stream';
-import browserify from 'gulp-browserify';
-import babelify from 'babelify';
-
-import { argv } from 'yargs';
 import { paths, config } from './gulp.config';
 
 const port = process.env.PORT || config.defaultPort;
