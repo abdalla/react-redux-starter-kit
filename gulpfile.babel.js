@@ -5,6 +5,7 @@ import browserify from 'gulp-browserify';
 import browserSync from 'browser-sync';
 import concat from 'gulp-concat';
 import csso from 'gulp-csso';
+import del from 'del';
 import flow from 'flow-bin';
 import gulp from 'gulp';
 import less from 'gulp-less';
@@ -17,6 +18,12 @@ import shell from 'gulp-shell';
 import watch from 'gulp-watch';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
+
+import rev from 'gulp-rev';
+import replace from 'gulp-rev-replace';
+//gulp-rev ==> https://github.com/sindresorhus/gulp-rev ==> to put revision on js and css files.
+//gulp-rev-replace ==> https://www.npmjs.com/package/gulp-rev-replace ==> helper for gul-rev
+//gulp-bump ==> https://www.npmjs.com/package/gulp-bump ==> to increment package version
 
 import { paths, config } from './gulp.config';
 
@@ -71,10 +78,13 @@ gulp.task('minify-js', () => {
       .pipe(babel())
       .pipe(concat(config.concatScriptName)) //=> only to avoid copies
       .pipe(gulp.dest(paths.bundle))
+      .pipe(rev())
       .pipe(browserify())
       .pipe(uglify())
       .pipe(rename(config.bundleMinName))
+      .pipe(replace())
       .pipe(gulp.dest(paths.bundle));
+
 });
 
 let express;
@@ -89,6 +99,8 @@ gulp.task('restart', () => {
     if(express.config.options.env.NODE_ENV === 'development') {
       startBrowserSync();
     };
+
+    del(`${paths.bundle}${config.concatScriptName}`);
 });
 
 gulp.task('watch', () => {
