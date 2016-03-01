@@ -20,8 +20,7 @@ import shell from 'gulp-shell';
 import watch from 'gulp-watch';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
-
-//gulp-bump ==> https://www.npmjs.com/package/gulp-bump ==> to increment package version
+import bump from 'gulp-bump';
 
 import { paths, config } from './gulp.config';
 
@@ -32,7 +31,7 @@ gulp.task('default', callback => {
 });
 
 gulp.task('build', callback => {
-  run('clean-app', 'clean-server', 'flow', 'babel-server', 'minify-js', 'minify-css', 'clean-concat-files', 'revision', 'replace', 'clean-temp', 'restart', callback);
+  run('clean-app', 'clean-server', 'flow', 'babel-server', 'minify-js', 'minify-css', 'clean-concat-files', 'revision', 'replace', 'clean-temp', 'bump', 'restart', callback);
 });
 
 gulp.task('clean-app', callback => {
@@ -122,6 +121,13 @@ gulp.task('watch', () => {
   return watch(paths.toWatch, () => {
     gulp.start('build');
   });
+});
+
+gulp.task('bump', () => {
+  gulp.src('./*.json')
+  .pipe(plumber())
+  .pipe(bump({type: argv.type})) //==> values: `major|minor|patch|prerelease`
+  .pipe(gulp.dest('./'));
 });
 
 ///browserSync stuff

@@ -6,8 +6,10 @@
     "start": "node ./server.js",
     "port": "PORT=7500 gulp",
     "nosync": "gulp --nosync",
-    "dev": "gulp",
-    "prod": "gulp --nosync"
+    "dev": "gulp --type patch",
+    "prod": "gulp --nosync --type minor",
+    "prod-new": "gulp --nosync --type major",
+    "prerelease": "gulp --nosync --type prerelease"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",
@@ -27,6 +29,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.2",
     "gulp-browserify": "^0.5.1",
+    "gulp-bump": "^1.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-csso": "^1.0.1",
     "gulp-jscs": "^3.0.2",
