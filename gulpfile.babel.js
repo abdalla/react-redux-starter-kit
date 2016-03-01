@@ -48,7 +48,6 @@ gulp.task('clean-temp', callback => {
 });
 
 gulp.task('clean-concat-files', () => {
-  log(paths.concatScript);
   del(paths.concatScript);
 });
 
