@@ -12,6 +12,8 @@ import less from 'gulp-less';
 import ls from 'gulp-live-server';
 import plumber from 'gulp-plumber';
 import rename from 'gulp-rename';
+import rev from 'gulp-rev';
+import replace from 'gulp-rev-replace';
 import rimraf from 'rimraf';
 import run from 'run-sequence';
 import shell from 'gulp-shell';
@@ -19,10 +21,6 @@ import watch from 'gulp-watch';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 
-import rev from 'gulp-rev';
-import replace from 'gulp-rev-replace';
-//gulp-rev ==> https://github.com/sindresorhus/gulp-rev ==> to put revision on js and css files.
-//gulp-rev-replace ==> https://www.npmjs.com/package/gulp-rev-replace ==> helper for gul-rev
 //gulp-bump ==> https://www.npmjs.com/package/gulp-bump ==> to increment package version
 
 import { paths, config } from './gulp.config';
@@ -34,7 +32,7 @@ gulp.task('default', callback => {
 });
 
 gulp.task('build', callback => {
-  run('clean-app', 'clean-server', 'flow', 'babel-server', 'static', 'minify-js', 'minify-css', 'restart', callback);
+  run('clean-app', 'clean-server', 'flow', 'babel-server', 'minify-js', 'minify-css', 'clean-concat-files', 'revision', 'replace', 'clean-temp', 'restart', callback);
 });
 
 gulp.task('clean-app', callback => {
@@ -45,6 +43,15 @@ gulp.task('clean-server', callback => {
   rimraf(paths.nodeServer, callback);
 });
 
+gulp.task('clean-temp', callback => {
+  rimraf(paths.temp, callback);
+});
+
+gulp.task('clean-concat-files', () => {
+  log(paths.concatScript);
+  del(paths.concatScript);
+});
+
 gulp.task('flow', shell.task([
   'flow'
 ], {ignoreErrors: true}));
@@ -52,12 +59,6 @@ gulp.task('flow', shell.task([
 gulp.task('babel-server', shell.task([
   `babel ${paths.server} --out-dir .`
 ]));
-
-gulp.task('static', () => {
-  return gulp
-      .src([`${paths.source}/public/**/*`])
-      .pipe(gulp.dest(paths.public));
-});
 
 ////css stuff
 gulp.task('minify-css', () => {
@@ -67,7 +68,7 @@ gulp.task('minify-css', () => {
       .pipe(less())
       .pipe(autoprefixer({browsers: ['last 2 versions', '> 5%']}))
       .pipe(csso())
-      .pipe(gulp.dest(paths.css));
+      .pipe(gulp.dest(paths.cssTemp));
 });
 ////
 
@@ -77,15 +78,32 @@ gulp.task('minify-js', () => {
       .pipe(plumber())
       .pipe(babel())
       .pipe(concat(config.concatScriptName)) //=> only to avoid copies
-      .pipe(gulp.dest(paths.bundle))
-      .pipe(rev())
+      .pipe(gulp.dest(paths.bundleTemp))
       .pipe(browserify())
       .pipe(uglify())
       .pipe(rename(config.bundleMinName))
-      .pipe(replace())
-      .pipe(gulp.dest(paths.bundle));
-
+      .pipe(gulp.dest(paths.bundleTemp))
 });
+
+gulp.task('revision', () => {
+  return gulp
+      .src(`${paths.temp}/**/*.*`)
+      .pipe(plumber())
+      .pipe(rev())
+      .pipe(gulp.dest(paths.destination))
+      .pipe(rev.manifest())
+      .pipe(gulp.dest(paths.destination));
+});
+
+gulp.task("replace", () => {
+  var manifest = gulp.src(paths.manifest);
+
+  return gulp
+    .src([`${paths.allPublicFile}`])
+    .pipe(replace({manifest: manifest}))
+    .pipe(gulp.dest(`${paths.public}`));
+});
+
 
 let express;
 
@@ -99,8 +117,6 @@ gulp.task('restart', () => {
     if(express.config.options.env.NODE_ENV === 'development') {
       startBrowserSync();
     };
-
-    del(`${paths.bundle}${config.concatScriptName}`);
 });
 
 gulp.task('watch', () => {
