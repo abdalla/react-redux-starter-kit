@@ -1,5 +1,6 @@
 # React Redux Starter Kit.. (in development)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)]()
+[![node](https://img.shields.io/badge/node-6.4.0-yellow.svg?maxAge=2592000)]()
 [![npm](https://img.shields.io/npm/v/npm.svg?maxAge=2592000)]()
 [![npm](https://img.shields.io/badge/gulp-3.9.1-blue.svg?maxAge=2592000)]()
 [![npm](https://img.shields.io/badge/browserify-13.0.0-green.svg?maxAge=2592000)]()
