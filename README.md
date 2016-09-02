@@ -1,4 +1,4 @@
-# Starter Kit.. (in development)
+# React Redux Starter Kit.. (in development)
 
 Doc will be available soon... Sorry about that...
 
