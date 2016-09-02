@@ -3,18 +3,18 @@
 Doc will be available soon... Sorry about that...
 
 ### What is done?
-- Gulp configuration
+1 - Gulp configuration
 
-- Node + Express
+2 - Node + Express
 
-- Bundle stuff
+3 - Bundle stuff
 
-- Browserify + Sync
+4 - Browserify + Sync
 
-- Minify stuff
+5 - Minify stuff
 
-- Package revision
+6 - Package revision
 
 
 ### What is missing?
-- React + Redux configuration
+1 - React + Redux configuration
